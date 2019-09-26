@@ -30,23 +30,26 @@ class DetailViewController: UIViewController {
     }
     
     private func loadImage(){
-        spinner.startAnimating()
-        spinner.isHidden = false
-        ImageHelper.shared.getImage(urlStr: CountryAPIClient.getFlagImageURLString(from: currentCountry.alpha2Code)) { (result) in
-            DispatchQueue.main.async {
-                switch result {
-                case .failure(let error):
-                    print(error)
-                case .success(let imageFromOnline):
-                    self.CountryFlagImage.image = imageFromOnline
-                    self.spinner.isHidden = true
-                    self.spinner.stopAnimating()
-                    
+        if currentCountry.name == "Mexico" {
+            CountryFlagImage.image = #imageLiteral(resourceName: "dora")
+        } else {
+            spinner.startAnimating()
+            spinner.isHidden = false
+            ImageHelper.shared.getImage(urlStr: CountryAPIClient.getFlagImageURLString(from: currentCountry.alpha2Code)) { (result) in
+                DispatchQueue.main.async {
+                    switch result {
+                    case .failure(let error):
+                        print(error)
+                    case .success(let imageFromOnline):
+                        self.CountryFlagImage.image = imageFromOnline
+                        self.spinner.isHidden = true
+                        self.spinner.stopAnimating()
+                        
+                    }
                 }
             }
         }
     }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureLayout()

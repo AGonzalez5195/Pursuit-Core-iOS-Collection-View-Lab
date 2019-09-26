@@ -27,16 +27,21 @@ class CountryCollectionViewCell: UICollectionViewCell {
         
         spinner.startAnimating()
         spinner.isHidden = false
-        ImageHelper.shared.getImage(urlStr: CountryAPIClient.getFlagImageURLString(from: country.alpha2Code)) { (result) in
-            DispatchQueue.main.async {
-                switch result {
-                case .failure(let error):
-                    print(error)
-                case .success(let imageFromOnline):
-                    self.countryFlagImage.image = imageFromOnline
-                    self.spinner.isHidden = true
-                    self.spinner.stopAnimating()
-                    
+        
+        if country.name == "Mexico" {
+            countryFlagImage.image = #imageLiteral(resourceName: "dora")
+        } else {
+            ImageHelper.shared.getImage(urlStr: CountryAPIClient.getFlagImageURLString(from: country.alpha2Code)) { (result) in
+                DispatchQueue.main.async {
+                    switch result {
+                    case .failure(let error):
+                        print(error)
+                    case .success(let imageFromOnline):
+                        self.countryFlagImage.image = imageFromOnline
+                        self.spinner.isHidden = true
+                        self.spinner.stopAnimating()
+                        
+                    }
                 }
             }
         }

@@ -60,6 +60,7 @@ class ViewController: UIViewController {
             fatalError("unexpected segue identifier")
         }
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         loadData()
