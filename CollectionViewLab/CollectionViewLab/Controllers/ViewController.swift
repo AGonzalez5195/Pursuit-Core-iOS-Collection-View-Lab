@@ -46,20 +46,20 @@ class ViewController: UIViewController {
         }
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let segueIdentifer = segue.identifier else {fatalError("No identifier in segue")}
-        switch segueIdentifer {
-            
-        case "collectionToDetailSegue":
-            if let cell = sender as? CountryCollectionViewCell, let indexPath = self.countryCollectionView.indexPath(for: cell) {
-                let destVC = segue.destination as! DetailViewController
-                destVC.currentCountry = filteredCountries[indexPath.row]
-            }
-            
-        default:
-            fatalError("unexpected segue identifier")
-        }
-    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        guard let segueIdentifer = segue.identifier else {fatalError("No identifier in segue")}
+//        switch segueIdentifer {
+//            
+//        case "collectionToDetailSegue":
+//            if let cell = sender as? CountryCollectionViewCell, let indexPath = self.countryCollectionView.indexPath(for: cell) {
+//                let destVC = segue.destination as! DetailViewController
+//                destVC.currentCountry = filteredCountries[indexPath.row]
+//            }
+//            
+//        default:
+//            fatalError("unexpected segue identifier")
+//        }
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -86,8 +86,12 @@ extension ViewController: UICollectionViewDataSource {
 
 extension ViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 200 , height: 200)
+        return CGSize(width: 200  , height: 200)
     }
+    
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+//        return UIEdgeInsets(top: 20, left: 50, bottom: 20, right: 50)
+//    }
 }
 
 
@@ -98,5 +102,20 @@ extension ViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
+    }
+}
+
+extension ViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let mainStoryBoard = UIStoryboard(name: "Main", bundle: nil)
+        
+        let detailVC = mainStoryBoard.instantiateViewController(withIdentifier: "detailVC") as! DetailViewController
+        
+        let specificCountry = countries[indexPath.row]
+        
+        detailVC.currentCountry = specificCountry
+        
+        self.navigationController?
+            .pushViewController(detailVC, animated: true)
     }
 }

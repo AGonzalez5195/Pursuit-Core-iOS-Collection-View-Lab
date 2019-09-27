@@ -17,6 +17,7 @@ class CountryCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var countryPopulationLabel: UILabel!
     
     func configureCell(from country: Country) {
+        
         countryNameLabel.text = country.name
         if country.capital == "" {
             countryCapitalLabel.text = "No Capital"

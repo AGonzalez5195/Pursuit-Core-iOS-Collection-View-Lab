@@ -21,17 +21,18 @@ class DetailViewController: UIViewController {
     
     private func configureLayout() {
         CountryNameLabel.text = currentCountry.name
-        
+        CountryPopulationLabel.text = "Population: \(currentCountry.population)"
         if currentCountry.capital == "" {
             CountryCapitalLabel.text = "No Capital"
         } else {
-            CountryCapitalLabel.text = currentCountry.capital
+            CountryCapitalLabel.text = "Capital: \(currentCountry.capital)"
         }
     }
     
     private func loadImage(){
         if currentCountry.name == "Mexico" {
             CountryFlagImage.image = #imageLiteral(resourceName: "dora")
+            spinner.isHidden = true
         } else {
             spinner.startAnimating()
             spinner.isHidden = false
